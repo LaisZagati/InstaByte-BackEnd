@@ -1,42 +1,12 @@
+// Import the Express framework for building web applications
 import express from "express";
+import routes from "./src/routes/postsRoutes.js";
 
-const posts = [
-    {
-        id: 1,
-        description: "A test photo",
-        image: "https://placecats.com/millie/300/150",
-      },
-      {
-        id: 2,
-        description: "Um lindo pôr do sol",
-        image: "https://picsum.photos/seed/picsum/200/300",
-      },
-      {
-        id: 3,
-        description: "Gato curioso",
-        image: "https://placekitten.com/200/300",
-      }
-];
-
+// Create an Express application instance
 const app = express();
-app.use(express.json())
+routes(app)
 
-
+// Start the server and listen for incoming requests on port 3000
 app.listen(3000, () => {
-    console.log("Server is listening...");
-});
-
-app.get("/posts", (req, res) =>  {
-    res.status(200).json(posts);
-});
-
-function getPostbyID(id) {
-    return posts.findIndex((post) => {
-        return post.id === Number(id)
-    })
-}
-
-app.get("/posts/:id", (req, res) =>  {
-    const index = getPostbyID(req.params.id)
-    res.status(200).json(posts[index]);
+  console.log("Server is listening on port 3000...");
 });
