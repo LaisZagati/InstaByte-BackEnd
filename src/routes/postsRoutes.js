@@ -1,11 +1,16 @@
 import express from "express";
-import { listarPosts } from "../controllers/postsControllers.js";
+import { listarPosts, postarNovoPost } from "../controllers/postsControllers.js";
 
+// Define as rotas usando o objeto Express app
 const routes = (app) => {
-        // Parse incoming JSON request bodies (middleware)
+    // Permite que o servidor interprete corpos de requisições no formato JSON
     app.use(express.json());
-        // Route handler for GET requests to "/posts" endpoint
-    app.get("/posts", listarPosts);
+  
+    // Rota para recuperar uma lista de todos os posts
+    app.get("/posts", listarPosts); // Chama a função controladora apropriada
+  
+    // Rota para criar um novo post
+    app.post("/posts", postarNovoPost); // Chama a função controladora para criação de posts
 }
 
 export default routes;

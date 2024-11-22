@@ -1,17 +1,19 @@
-// Import the database connection function from a separate configuration file
-import conectarAoBanco from "../config/dbConfig.js";
-
-// Establish a connection to the database asynchronously
+import conectarAoBanco from "../config/dbConfig.js"
+// Conecta ao banco de dados utilizando a string de conexão fornecida como variável de ambiente
 const conexao = await conectarAoBanco(process.env.STRING_CONEXAO);
 
+// Função assíncrona para buscar todos os posts do banco de dados
+export async function getTodosPosts() {
+    // Seleciona o banco de dados "imersao-instabytes"
+    const db = conexao.db("imersao-instabytes");
+    // Seleciona a coleção "posts" dentro do banco de dados
+    const colecao = db.collection("posts");
+    // Retorna um array com todos os documentos da coleção
+    return colecao.find().toArray();
+}
 
-// Asynchronous function to fetch all posts from the database
-export default async function getAllPosts() {
-    // Access the "imersao-instabytes" database and "posts" collection
+export async function criarPost(novoPost) {
     const db = conexao.db("imersao-instabytes");
     const colecao = db.collection("posts");
-  
-    // Retrieve all posts as an array using `find().toArray()`
-    return await colecao.find().toArray();
-  }
-  
+    return colecao.insertOne(novoPost)
+}
